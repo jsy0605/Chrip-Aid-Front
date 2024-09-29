@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:chrip_aid/orphanage/layout/detail_page_layout.dart';
-import '../../supervisor/viewmodel/supervisor_accountmanagement_viewmodel.dart';
+import '../../admin/viewmodel/admin_accountmanagement_viewmodel.dart';
 import '../styles/colors.dart';
 import '../styles/sizes.dart';
 
@@ -25,7 +25,7 @@ class CustomDetailReportInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.read(supervisorAccountManagementViewModelProvider)..getInfo();
+    final viewModel = ref.read(adminAccountManagementViewModelProvider)..getInfo();
 
     return DetailPageLayout(
       extendBodyBehindAppBar: false,
@@ -59,14 +59,16 @@ class CustomDetailReportInfo extends ConsumerWidget {
                 ),
               ),
               child:Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,
+                  Text(
+                    title,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
                   ),),
+                  SizedBox(height: 20.0,),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -82,10 +84,10 @@ class CustomDetailReportInfo extends ConsumerWidget {
                               Row(
                                 children: [
                                   Text(
-                                    '이름',
+                                    '신고자',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
+                                      fontSize: 14.0,
                                     ),
                                   ),
                                   SizedBox(width: 10.0,),
@@ -98,7 +100,7 @@ class CustomDetailReportInfo extends ConsumerWidget {
                                     '아이디',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
+                                      fontSize: 14.0,
                                     ),
                                   ),
                                   SizedBox(width: 10.0,),
@@ -108,34 +110,35 @@ class CustomDetailReportInfo extends ConsumerWidget {
                               Row(
                                 children: [
                                   Text(
-                                    '별명',
+                                    '닉네임',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
+                                      fontSize: 14.0,
                                     ),
                                   ),
                                   SizedBox(width: 10.0,),
                                   Text('${nickname}'),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    '신고 사유',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
-                                    ),
-                                  ),
-                                  SizedBox(width: 10.0,),
-                                  Text('${content}'),
-                                ],
-                              ),
                             ],
                           ),
-
                         ],
-                      )
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30.0,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '상세 신고 사유',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      SizedBox(width: 15.0,),
+                      Text('${content}'),
                     ],
                   ),
                 ],

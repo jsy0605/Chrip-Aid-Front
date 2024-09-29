@@ -7,6 +7,7 @@ import 'package:chrip_aid/home/component/custom_speech_balloon.dart';
 import 'package:chrip_aid/home/viewmodel/user_home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class UserHomeScreen extends TabScreen {
   @override
@@ -110,10 +111,36 @@ class UserHomeScreen extends TabScreen {
                   ),
                 ],
               ),
+              SizedBox(height: kPaddingLargeSize,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: CustomColor.itemMainColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      onPressed: () =>_navigateToDetailPage(context),
+                      icon: Icon(
+                        Icons.chat_bubble_outline_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+
             ],
           ),
         ),
       ),
+    );
+  }
+  void _navigateToDetailPage(BuildContext context) {
+    context.push(
+      '/chatting',
     );
   }
 }

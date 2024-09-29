@@ -1,9 +1,14 @@
+import 'package:chrip_aid/admin/view/admin_accountmanagement_screen.dart';
+import 'package:chrip_aid/admin/view/admin_postmanagement_screen.dart';
+import 'package:chrip_aid/admin/view/admin_reportmanagement_screen.dart';
 import 'package:chrip_aid/auth/model/state/authority_state.dart';
 import 'package:chrip_aid/auth/provider/auth_provider.dart';
 import 'package:chrip_aid/auth/view/login_screen.dart';
 import 'package:chrip_aid/auth/view/orphanage_sign_up_screen.dart';
 import 'package:chrip_aid/auth/view/sign_up_screen.dart';
 import 'package:chrip_aid/auth/view/user_sign_up_screen.dart';
+import 'package:chrip_aid/chatting/view/chatting_message_screen.dart';
+import 'package:chrip_aid/chatting/view/chatting_screen.dart';
 import 'package:chrip_aid/common/component/custom_detail_post_info.dart';
 import 'package:chrip_aid/common/component/custom_detail_report_info.dart';
 import 'package:chrip_aid/common/utils/log_util.dart';
@@ -30,14 +35,11 @@ import 'package:chrip_aid/post/view/user_post_screen.dart';
 import 'package:chrip_aid/reservation/view/orphanage_reservation_screen.dart';
 import 'package:chrip_aid/reservation/view/reservation_screen.dart';
 import 'package:chrip_aid/reservation/view/user_reservation_screen.dart';
-import 'package:chrip_aid/supervisor/view/supervisor_postmanagement_screen.dart';
-import 'package:chrip_aid/supervisor/view/supervisor_reportmanagement_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../supervisor/view/superviser_screen.dart';
-import '../../supervisor/view/supervisor_accountmanagement_screen.dart';
+import '../../admin/view/admin_screen.dart';
 import '../component/custom_detail_info.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -241,13 +243,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/supervisor',
-        name: SupervisorScreen.routeName,
-        builder: (context, state) => const SupervisorScreen(),
+        name: AdminScreen.routeName,
+        builder: (context, state) => const AdminScreen(),
         routes: [
           GoRoute(
           path: 'accountmanagement',
-          name: SupervisorAccountmanagementScreen.routeName,
-          builder: (context, state) => const SupervisorAccountmanagementScreen(),
+          name: AdminAccountmanagementScreen.routeName,
+          builder: (context, state) => const AdminAccountmanagementScreen(),
             routes: [
               GoRoute(
                 path: 'detail',
@@ -268,8 +270,8 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
           GoRoute(
             path: 'postmanagement',
-            name: SupervisorPostManagementScreen.routeName,
-            builder: (context, state) => SupervisorPostManagementScreen(),
+            name: AdminPostmanagementScreen.routeName,
+            builder: (context, state) => AdminPostmanagementScreen(),
               routes: [
                 GoRoute(
                   path: 'postdetail',
@@ -287,8 +289,8 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: 'reportmanagement',
-            name: SupervisorReportmanagementScreen.routeName,
-            builder: (context, state) => const SupervisorReportmanagementScreen(),
+            name: AdminReportmanagementScreen.routeName,
+            builder: (context, state) => const AdminReportmanagementScreen(),
             routes: [
               GoRoute(
                 path: 'detail',
@@ -307,6 +309,22 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
         ]
+      ),
+      GoRoute(
+          path: '/chatting',
+          name: ChattingScreen.routeName,
+          builder: (context, state) => const ChattingScreen(),
+          routes: [
+            GoRoute(
+              path: ':chat_room_id',
+              builder: (context, state) {
+                final chatRoomId = state.pathParameters['chat_room_id']!;
+                final extra = state.extra as Map<String, dynamic>?;
+                final targetId = extra?['targetId'] as String? ?? 'Unknown';
+                return ChattingMessageScreen(chatRoomId: chatRoomId, targetId: targetId);
+              },
+            ),
+          ]
       ),
     ],
     refreshListenable: auth.authState,
